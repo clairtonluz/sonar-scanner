@@ -1,6 +1,6 @@
 FROM openjdk:8-alpine
 LABEL maintainer="Clairton Luz <clairton.c.l@gmail.com>"
-
+WORKDIR /src
 ARG RELEASE=3.3.0.1492
 
 RUN apk add curl grep sed unzip nodejs npm
