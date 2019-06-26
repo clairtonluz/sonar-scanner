@@ -8,9 +8,9 @@ create your **sonar-project.properties** into project root folder. Below a examp
 
 ```properties
 # must be unique in a given SonarQube instance
-sonar.projectKey=aluno-online-react
+sonar.projectKey=example-react
 # this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
-sonar.projectName=Aluno Online React
+sonar.projectName=Example React
 sonar.projectVersion=1.0
  
 # Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
@@ -20,8 +20,8 @@ sonar.sources=.
 # Encoding of the source code. Default is default system encoding
 sonar.sourceEncoding=UTF-8
 # sonar.javascript.file.suffixes=.js,.jsx
-sonar.host.url=http://sonar.seduc.ce.gov.br:9002
-sonar.login=65a7a2228ac6c0adde3788560d4ae22503cce04f
+sonar.host.url=http://sonar.example.com
+sonar.login=[SEU TOKEN DE LOGIN]
 sonar.exclusions="**/node_modules/**"
 ```
 
