@@ -7,25 +7,43 @@ Sonar scanner docker image
 create your **sonar-project.properties** into project root folder. Below a example to **ReactJS**
 
 ```properties
-# must be unique in a given SonarQube instance
-sonar.projectKey=example-react
-# this is the name and version displayed in the SonarQube UI. Was mandatory prior to SonarQube 6.1.
-sonar.projectName=Example React
+# Configuration to react project created with create-react-app 
+sonar.projectKey=br.com.clairtonluz:example
+sonar.projectName=Example
 sonar.projectVersion=1.0
- 
-# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
-# This property is optional if sonar.modules is set. 
-sonar.sources=.
- 
-# Encoding of the source code. Default is default system encoding
+
+sonar.sources=src
+sonar.tests=src
+sonar.test.inclusions=src/**/*.test.ts,src/**/*.test.tsx,src/**/*.spec.js,src/**/*.spec.jsx,src/**/*.test.js,src/**/*.test.jsx
+# If your project use javascript instead of typescript change "sonar.typescript.lcov.repostPaths" to "sonar.javascript.lcov.repostPaths"
+sonar.typescript.lcov.reportPaths=coverage/lcov.info
+
 sonar.sourceEncoding=UTF-8
-# sonar.javascript.file.suffixes=.js,.jsx
-sonar.host.url=http://sonar.example.com
-sonar.login=[SEU TOKEN DE LOGIN]
-sonar.exclusions="**/node_modules/**"
+sonar.exclusions=**/node_modules/**, build/**
+
 ```
 
-2) Now into project root folder run this command
+2) Now run this command to enter into docker container with your code
 ```shell
-docker run -ti -v $(pwd):/src clairtonluz/sonar-scanner sonar-scanner
+docker run -e SONAR_HOST_URL=<YOUR_SONAR_HOST_URL> \
+    -e SONAR_TOKEN=<YOUR_SONAR_TOKEN> \
+    --entrypoint=/bin/bash \
+    -it -v "/path/to/your/project:/usr/src" \
+    clairtonluz/sonar-scanner-cli
+```
+
+
+2) Run coverage e send to sonar
+```shell
+docker run -e SONAR_HOST_URL=<YOUR_SONAR_HOST_URL> \
+    -e SONAR_TOKEN=<YOUR_SONAR_TOKEN> \
+    --entrypoint=/bin/bash \
+    -it -v "/path/to/your/project:/usr/src" \
+    clairtonluz/sonar-scanner-cli
+
+# Into image docker run this to generate coverage
+npx react-scripts test --coverage --coverageReporters=lcov --env=jsdom --watchAll=false
+
+# send coverage to sonar
+sonar-scanner
 ```
