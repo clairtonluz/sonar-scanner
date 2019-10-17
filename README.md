@@ -56,6 +56,7 @@ test:
     SONAR_HOST_URL: <your_sonar_url_here>
     SONAR_TOKEN: <your_token_here>
   script:
+   - npm install
    - npx react-scripts test --coverage --coverageReporters=lcov --env=jsdom --watchAll=false
    - sonar-scanner -Dsonar.projectKey="$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME" -Dsonar.projectName="$CI_PROJECT_TITLE"
 ```
