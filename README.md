@@ -47,3 +47,15 @@ npx react-scripts test --coverage --coverageReporters=lcov --env=jsdom --watchAl
 # send coverage to sonar
 sonar-scanner
 ```
+
+3) Setup Gitlab job in .gitlab-ci.yml to automatically send coverage to sonar
+```yml
+test:
+  image: sonarsource/sonar-scanner-cli
+  variables:
+    SONAR_HOST_URL: <your_sonar_url_here>
+    SONAR_TOKEN: <your_token_here>
+  script:
+   - npx react-scripts test --coverage --coverageReporters=lcov --env=jsdom --watchAll=false
+   - sonar-scanner -Dsonar.projectKey="$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME" -Dsonar.projectName="$CI_PROJECT_TITLE"
+```
